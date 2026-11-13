@@ -1,0 +1,215 @@
+:root {
+  --bg: #1f2326;
+  --panel: #2a2f33;
+  --field: #1b1f22;
+  --text: #e8e8e8;
+  --muted: #9aa4ab;
+  --accent: #4f8cc9;
+  --light: #f0d9b5;
+  --dark: #b58863;
+  --last-light: #cdd26a;
+  --last-dark: #aaa23a;
+}
+
+* { box-sizing: border-box; }
+
+[hidden] { display: none !important; }
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+}
+
+header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  border-bottom: 1px solid #111;
+}
+
+header h1 { margin: 0; font-size: 20px; }
+#roomInfo { color: var(--muted); }
+
+main {
+  padding: 16px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+h3 { margin: 0 0 8px; font-size: 16px; }
+
+.card {
+  background: var(--panel);
+  border-radius: 8px;
+  padding: 16px;
+}
+
+.lobby { max-width: 380px; margin: 40px auto; }
+
+label { display: block; margin-bottom: 10px; }
+
+input {
+  display: block;
+  width: 100%;
+  height: 40px;
+  margin-top: 4px;
+  padding: 0 12px;
+  border: 1px solid #444;
+  border-radius: 6px;
+  background: var(--field);
+  color: var(--text);
+  font-size: 16px;
+}
+
+button {
+  height: 40px;
+  padding: 0 16px;
+  border: 0;
+  border-radius: 6px;
+  background: var(--accent);
+  color: #fff;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+button.secondary { background: #444c53; }
+button:hover { filter: brightness(1.1); }
+
+hr { border: 0; border-top: 1px solid #444; margin: 18px 0; }
+
+.lobby button { display: block; width: 100%; margin-bottom: 4px; }
+.lobby label { margin-bottom: 12px; }
+
+.row { display: flex; gap: 8px; }
+.row button { flex-shrink: 0; }
+.row input { margin-top: 0; }
+
+.error { color: #ff8a80; min-height: 1.2em; margin: 8px 0 0; }
+
+/* Game layout */
+.game {
+  display: grid;
+  grid-template-columns: auto 300px;
+  gap: 16px;
+  justify-content: center;
+  align-items: start;
+}
+
+.board-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+#board {
+  width: min(92vw, 520px);
+  aspect-ratio: 1 / 1;
+  display: grid;
+  grid-template-columns: repeat(8, minmax(0, 1fr));
+  grid-template-rows: repeat(8, minmax(0, 1fr));
+  container-type: inline-size;
+  border: 4px solid #111;
+}
+
+#status { font-weight: 600; min-height: 1.4em; text-align: center; }
+
+.square {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  user-select: none;
+}
+
+.square.light { background: var(--light); }
+.square.dark { background: var(--dark); }
+.square.light.last { background: var(--last-light); }
+.square.dark.last { background: var(--last-dark); }
+.square.selected { box-shadow: inset 0 0 0 4px var(--accent); }
+
+.coord {
+  position: absolute;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1;
+  pointer-events: none;
+}
+
+.coord.rank { top: 4px; left: 4px; }
+.coord.file { bottom: 4px; right: 5px; }
+.light > .coord { color: var(--dark); }
+.dark > .coord { color: var(--light); }
+
+.square.target::before {
+  content: "";
+  position: absolute;
+  width: 28%;
+  height: 28%;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.25);
+  pointer-events: none;
+}
+
+.square.capture::after {
+  content: "";
+  position: absolute;
+  inset: 4%;
+  border: 5px solid rgba(0, 0, 0, 0.25);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.piece {
+  font-size: 9cqw;
+  line-height: 1;
+  pointer-events: none;
+}
+
+.piece.white { color: #fff; text-shadow: 0 0 2px #000, 0 0 2px #000; }
+.piece.black { color: #000; text-shadow: 0 0 2px #fff; }
+
+.side {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 300px;
+}
+
+.player { margin: 4px 0; }
+.muted { color: var(--muted); }
+
+#history {
+  max-height: 220px;
+  overflow-y: auto;
+  font-family: ui-monospace, Consolas, monospace;
+}
+
+#history table { width: 100%; border-collapse: collapse; }
+#history td { padding: 2px 6px; }
+#history td:first-child { color: var(--muted); width: 2.5em; }
+
+#messages {
+  height: 240px;
+  overflow-y: auto;
+  background: var(--field);
+  border-radius: 6px;
+  padding: 8px;
+  margin-bottom: 8px;
+  font-size: 14px;
+}
+
+.msg { margin-bottom: 4px; overflow-wrap: anywhere; }
+.msg.system { color: var(--muted); font-style: italic; }
+
+#chatForm input { margin-top: 0; }
+
+@media (max-width: 800px) {
+  .game { grid-template-columns: 1fr; }
+  .side { width: 100%; max-width: 520px; margin: 0 auto; }
+}

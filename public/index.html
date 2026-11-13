@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Chessit</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <header>
+    <h1>Chessit</h1>
+    <span id="roomInfo"></span>
+  </header>
+
+  <main>
+    <section id="lobby" class="lobby card">
+      <label>Your name
+        <input id="name" maxlength="20" autocomplete="off">
+      </label>
+      <button id="createBtn">Create room</button>
+
+      <hr>
+
+      <label>Room code
+        <input id="code" maxlength="5" autocomplete="off" style="text-transform:uppercase">
+      </label>
+      <button id="joinBtn" class="secondary">Join room</button>
+
+      <p id="lobbyError" class="error"></p>
+    </section>
+
+    <section id="game" class="game" hidden>
+      <div class="board-col">
+        <div id="board"></div>
+        <div id="status"></div>
+        <div id="gameError" class="error"></div>
+      </div>
+
+      <aside class="side">
+        <div class="card">
+          <div id="playerList"></div>
+          <div class="row" style="margin-top:10px">
+            <button id="inviteBtn" class="secondary">Copy invite link</button>
+            <button id="leaveBtn" class="secondary">Leave</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Moves</h3>
+          <div id="history"></div>
+        </div>
+
+        <div class="card">
+          <h3>Chat</h3>
+          <div id="messages"></div>
+          <form id="chatForm" class="row">
+            <input id="chatInput" maxlength="300" placeholder="Type a message" autocomplete="off">
+            <button>Send</button>
+          </form>
+        </div>
+      </aside>
+    </section>
+  </main>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="/app.js"></script>
+</body>
+</html>
